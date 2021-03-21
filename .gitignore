@@ -1,0 +1,7 @@
+*.pdf
+*.docx
+*-data.pkl
+*-data.csv
+Wrong/
+.ipynb_checkpoints/
+.idea/

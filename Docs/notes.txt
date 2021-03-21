@@ -1,0 +1,23 @@
+08/03/21
+ * Did lots of work on this today, learned about onehot-encoding vs label encoding etc and that XGB and gradient boosting classifiers are the same thing basically
+ * This meant I switched to trying out a decision tree classifier which works very well
+ * Wrote a parser for chronic disease and one-hot encoded that
+ * Most of the work today was more advanced data-cleaning, largely relating to getting rid of those few strings left and replacing them datetimes/label ids
+ * Also dropped the column date_discharge_death as when using watson autoAI this was so stupidly heavily weighted and isn't practical for my question
+ * Imputing
+
+ * Need to write a parser for symptoms
+ * Look into feature engineering/hyperparam optimization with visualization with seaborn
+ * Create a visualisation for feature importance for the final product
+ * Used watson autoAI to help me figure out some values for my XGB classifier - look into comparison vs weak values
+ * Create a parser for travel history      
+
+18/03/21
+ * Ran optuna for HPO on RFC. However didn't use cross-validation score just split the data once re-used with no validation set.
+   This led to leaking data from the test set to the model via improving the hyperparameters specifically for that test set. 
+   Therefore, used cross-validation scores only going forward when running HPO and scoring the optimized models.
+   
+ * Speak about limitation above and how I'd use cross_val_score with more folds to achieve more consistent results (i.e. smaller sd)
+
+19/03/21
+ * Realised I was using regular k-folds in original algorithm test - should use stratified due to huge class imbalance.
