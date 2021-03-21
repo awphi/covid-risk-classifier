@@ -13,7 +13,7 @@ def objective(trial):
         verbosity = 0,
         objective = "multi:softprob",
         use_label_encoder = False,
-        n_estimators = trial.suggest_int("n_estimators", 20, 500),
+        n_estimators = trial.suggest_int("n_estimators", 20, 200),
         #"booster" = trial.suggest_categorical("booster", ["gbtree", "gblinear", "dart"]),
         reg_lambda = trial.suggest_float("lambda", 1e-8, 1.0, log=True),
         reg_alpha = trial.suggest_float("alpha", 1e-8, 1.0, log=True),
