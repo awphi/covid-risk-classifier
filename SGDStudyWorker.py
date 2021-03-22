@@ -9,12 +9,18 @@ X = df.drop(['outcome'], axis=1).values
 y = df['outcome'].values
 
 def objective(trial):
-    clf = SGDClassifier(loss='hinge')
+    alpha = trial.suggest_float("alpha", 1e-8, 1.0, log=True)
+    
+    clf = SGDClassifier(
+        loss='hinge', 
+        max_iter=1000, 
+        alpha=alpha
+    )
 
     score = model_selection.cross_val_score(clf, X, y, cv=3, scoring='accuracy')
     return score.mean()
 
 
 if __name__ == "__main__":
-    study = optuna.load_study(study_name='XGBStudy', storage='postgresql://optuna:optuna@localhost:5432/covid-studies')
+    study = optuna.load_study(study_name='SGDTestStudy', storage='postgresql://optuna:optuna@localhost:5432/covid-studies')
     study.optimize(objective, show_progress_bar=True)
