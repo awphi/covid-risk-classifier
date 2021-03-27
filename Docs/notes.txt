@@ -21,3 +21,20 @@
 
 19/03/21
  * Realised I was using regular k-folds in original algorithm test - should use stratified due to huge class imbalance.
+
+22/03/21
+ * OMG I have made so many mistakes,
+ * So the RFC I thought was done turns out it was actually putting EVERYTHING in the same class (2) which happens to give an accuracy of 0.66
+ * Started using classification_report from sklearn to see more advanced metrics and wow, XGBClassifier is really good and actually has class diversity
+ * Gonna have to throw away everything from my report and likely start over
+ * Read: https://stats.stackexchange.com/questions/392115/why-is-cross-val-score-substantially-lower-than-score-or-roc-auc-score/392135
+   -> basically, stratified kfold doesnt shuffle the folds by default leading to some extreme bias as the data is sorted
+   -> by shuffling the folds this bias is eliminated
+   -> then when hyperparam tuning it doesn't gravitate towards parameters that put everything in one class (the most common class) and not improving
+   -> this isn't by bad luck but a systematically wrong way of scoring the hyperparams (without shuffling the k folds) meaning it can never find parameters 
+      that beat this 'cheaty' method
+  
+24/04/21
+ * Been reading a lot about measuring metrics, recall vs precision etc.
+ * For this dataset I think recall is more important as predicting someone will live when they will die is very very bad
+ * The confusion matrix of RFC shows this very well with the model getting confused about true deceased vs predicted hospitalized/recovered
